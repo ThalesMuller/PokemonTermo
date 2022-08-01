@@ -54,7 +54,7 @@ const themes = {
         fonts: {
             family: {
                 base: "Roboto, sans-serif",
-                highlight: "Righteous', cursive",
+                highlight: "Righteous, cursive",
             },
             size: {
                 _4XS: "10px",

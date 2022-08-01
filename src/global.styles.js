@@ -19,7 +19,6 @@ figure,
 blockquote,
 dl,
 dd {
-    font-family: ${(props) => props.theme.fonts.family.base};
     margin: 0;
 }
 
@@ -38,7 +37,9 @@ html:focus-within {
 body {
     min-height: 100vh;
     text-rendering: optimizeSpeed;
-    line-height: ${(props) => props.theme.fonts.height.large};
+    line-height: ${({ theme }) => theme.fonts.height.MD};
+    font-weight: ${({ theme }) => theme.fonts.weight.regular};
+    font-family: ${({ theme }) => theme.fonts.family.highlight};
 }
 
 /* A elements that don't have a class get default styles */
