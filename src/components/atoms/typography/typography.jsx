@@ -17,6 +17,7 @@ const MAPPED_VARIANTS = {
     overline: "span",
     display: "span",
     code: "code",
+    displayChar: "span",
 };
 
 export const Typography = (props) => {
@@ -27,6 +28,7 @@ export const Typography = (props) => {
             as={MAPPED_VARIANTS[variant]}
             variant={variant}
             fontColor={color}
+            data-testid={`typography_${variant}`}
         >
             {children}
         </Container>

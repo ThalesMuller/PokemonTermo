@@ -1,15 +1,24 @@
 import styled, { css } from "styled-components";
 
 const h1 = css`
-    font-family: ${({ theme }) => theme.fonts.family.highlight.primary};
+    font-family: ${({ theme }) => theme.fonts.family.highlight};
     font-size: ${({ theme }) => theme.fonts.size.XL};
     font-weight: ${({ theme }) => theme.fonts.weight.bold};
-    line-height: ${({ theme }) => theme.fonts.height.XL};
-    color: ${({ theme, fontColor }) =>
-        fontColor || theme.colors.grayscale.white};
+    line-height: ${({ theme }) => theme.fonts.height.LG};
 `;
-const h2 = css``;
-const h3 = css``;
+const h2 = css`
+    font-family: ${({ theme }) => theme.fonts.family.highlight};
+    font-size: ${({ theme }) => theme.fonts.size.LG};
+    font-weight: ${({ theme }) => theme.fonts.weight.bold};
+    line-height: ${({ theme }) => theme.fonts.height.LG};
+`;
+const h3 = css`
+    font-family: ${({ theme }) => theme.fonts.family.highlight};
+    font-size: ${({ theme }) => theme.fonts.size.MD};
+    font-weight: ${({ theme }) => theme.fonts.weight.bold};
+    line-height: ${({ theme }) => theme.fonts.height.MD};
+`;
+
 const h4 = css``;
 const h5 = css``;
 const h6 = css``;
@@ -22,8 +31,20 @@ const caption = css``;
 const overline = css``;
 const display = css``;
 const code = css``;
+const displayChar = css`
+    font-family: ${({ theme }) => theme.fonts.family.highlight};
+    font-size: ${({ theme }) => theme.fonts.size.XL};
+    font-weight: ${({ theme }) => theme.fonts.weight.bold};
+    line-height: ${({ theme }) => theme.fonts.height.LG};
+
+    text-align: center;
+    text-transform: uppercase;
+`;
 
 const Container = styled.div`
+    color: ${({ theme, fontColor }) =>
+        fontColor || theme.colors.grayscale.white};
+
     ${({ variant }) => variant === "h1" && h1};
     ${({ variant }) => variant === "h2" && h2};
     ${({ variant }) => variant === "h3" && h3};
@@ -39,6 +60,7 @@ const Container = styled.div`
     ${({ variant }) => variant === "overline" && overline};
     ${({ variant }) => variant === "display" && display};
     ${({ variant }) => variant === "code" && code};
+    ${({ variant, theme }) => variant === "displayChar" && displayChar};
 `;
 
 export default Container;
