@@ -1,3 +1,6 @@
+import { createGlobalStyle } from "styled-components";
+
+export const GlobalStyle = createGlobalStyle`
 /* Box sizing rules */
 *,
 *::before,
@@ -16,7 +19,7 @@ figure,
 blockquote,
 dl,
 dd {
-    font-family: "Roboto", sans-serif;
+    font-family: ${(props) => props.theme.fonts.family.base};
     margin: 0;
 }
 
@@ -35,7 +38,7 @@ html:focus-within {
 body {
     min-height: 100vh;
     text-rendering: optimizeSpeed;
-    line-height: 1.5;
+    line-height: ${(props) => props.theme.fonts.height.large};
 }
 
 /* A elements that don't have a class get default styles */
@@ -73,6 +76,4 @@ select {
         scroll-behavior: auto !important;
     }
 }
-
-/* font-family: 'Righteous', cursive;
-font-family: 'Roboto', sans-serif; */
+`;

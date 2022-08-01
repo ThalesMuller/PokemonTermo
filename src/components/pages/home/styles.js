@@ -1,12 +1,11 @@
 import styled from "styled-components";
 
-const Container = styled.header`
+const Container = styled.div`
     display: grid;
-    justify-content: space-between;
-    align-items: center;
 
     width: 100%;
-    background-color: ${({ theme }) => theme.colors.brand.primary.medium};
+    height: 100%;
+    background-color: ${({ theme }) => theme.colors.brand.primary.lightest};
     color: ${({ theme }) => theme.colors.grayscale.white};
     padding: ${({ theme }) => theme.spacing.XS}
         ${({ theme }) => theme.spacing.LG};
