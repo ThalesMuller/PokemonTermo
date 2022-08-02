@@ -1,4 +1,4 @@
-import React, { useState, forwardRef } from "react";
+import React, { useState, forwardRef, useCallback } from "react";
 import { Typography } from "../typography";
 import { useTheme } from "styled-components";
 import Container from "./styles";
@@ -8,8 +8,12 @@ export const CharInput = forwardRef((props, ref) => {
     const [currentValue, setCurrentValue] = useState("");
     const theme = useTheme();
 
+    const isDisabled = useCallback(() => {
+        return state !== "current";
+    }, [state]);
+
     const onChange = (e) => {
-        if (state === "error") return;
+        if (isDisabled()) return;
         const { value } = e.target;
 
         if (value.length > 1) return;
@@ -18,12 +22,10 @@ export const CharInput = forwardRef((props, ref) => {
         handleChange(ref, index);
     };
     const onClick = (e) => {
-        if (state === "error" || !currentValue) return;
+        if (isDisabled() || !currentValue) return;
 
         ref.current.select();
     };
-
-    console.log(theme);
 
     return (
         <Container
@@ -32,7 +34,8 @@ export const CharInput = forwardRef((props, ref) => {
             value={currentValue}
             onChange={onChange}
             onClick={onClick}
-            disabled={state === "error"}
+            disabled={isDisabled()}
+            tabIndex={isDisabled() ? -1 : 0}
         >
             <Typography
                 variant='displayChar'
