@@ -2,9 +2,11 @@ import styled, { css } from "styled-components";
 
 const h1 = css`
     font-family: ${({ theme }) => theme.fonts.family.highlight};
-    font-size: ${({ theme }) => theme.fonts.size.XL};
+    font-size: ${({ theme }) => theme.fonts.size.LG};
     font-weight: ${({ theme }) => theme.fonts.weight.bold};
-    line-height: ${({ theme }) => theme.fonts.height.LG};
+    line-height: ${({ theme }) => theme.fonts.height.MD};
+    text-shadow: 5px 5px 3px
+        ${({ theme }) => theme.colors.brand.secondary.darkest};
 `;
 const h2 = css`
     font-family: ${({ theme }) => theme.fonts.family.highlight};
@@ -24,8 +26,22 @@ const h5 = css``;
 const h6 = css``;
 const subtitle1 = css``;
 const subtitle2 = css``;
-const body1 = css``;
-const body2 = css``;
+const body1 = css`
+    font-family: ${({ theme }) => theme.fonts.family.base};
+    font-size: ${({ theme }) => theme.fonts.size.MD};
+    font-weight: ${({ theme }) => theme.fonts.weight.regular};
+    line-height: ${({ theme }) => theme.fonts.height.MD};
+
+    max-width: 45ch;
+`;
+const body2 = css`
+    font-family: ${({ theme }) => theme.fonts.family.base};
+    font-size: ${({ theme }) => theme.fonts.size.SM};
+    font-weight: ${({ theme }) => theme.fonts.weight.regular};
+    line-height: ${({ theme }) => theme.fonts.height.MD};
+
+    max-width: 45ch;
+`;
 const button = css``;
 const caption = css``;
 const overline = css``;
@@ -33,7 +49,16 @@ const display = css``;
 const code = css``;
 const displayChar = css`
     font-family: ${({ theme }) => theme.fonts.family.highlight};
-    font-size: ${({ theme }) => theme.fonts.size.XL};
+    font-size: ${({ theme }) => theme.fonts.size._3XS};
+    font-weight: ${({ theme }) => theme.fonts.weight.bold};
+    line-height: ${({ theme }) => theme.fonts.height.LG};
+
+    text-align: center;
+    text-transform: uppercase;
+`;
+const displayKey = css`
+    font-family: ${({ theme }) => theme.fonts.family.highlight};
+    font-size: ${({ theme }) => theme.fonts.size._3XS};
     font-weight: ${({ theme }) => theme.fonts.weight.bold};
     line-height: ${({ theme }) => theme.fonts.height.LG};
 
@@ -60,7 +85,8 @@ const Container = styled.div`
     ${({ variant }) => variant === "overline" && overline};
     ${({ variant }) => variant === "display" && display};
     ${({ variant }) => variant === "code" && code};
-    ${({ variant, theme }) => variant === "displayChar" && displayChar};
+    ${({ variant }) => variant === "displayChar" && displayChar};
+    ${({ variant }) => variant === "displayKey" && displayKey};
 `;
 
 export default Container;

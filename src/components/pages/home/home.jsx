@@ -1,14 +1,17 @@
 import React from "react";
+import { AttemptContainer } from "../../organisms/attemptContainer";
+import { VirtualKeyboard } from "../../organisms/virtualKeyboard";
+import { usePokemon } from "../../../hooks/usePokemon";
 import Container from "./styles";
-import { getPokemons } from "../../../services/api";
-import { WordInput } from "../../molecules/wordInput";
 
 export const Home = () => {
-    // const pokemons = getPokemons();
-    // console.log(pokemons);
+    const { pokemons } = usePokemon();
+    console.log(pokemons);
+
     return (
         <Container>
-            <WordInput size={5} />
+            <AttemptContainer />
+            <VirtualKeyboard />
         </Container>
     );
 };

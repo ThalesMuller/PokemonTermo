@@ -1,39 +1,59 @@
 import styled, { css } from "styled-components";
 
-const EmptyInput = css``;
-const FilledInput = css``;
-const DisabledInput = css``;
-const ErrorInput = css``;
-const WarnInput = css``;
-const SuccesInput = css``;
-
-const Container = styled.div`
-    padding: ${({ theme }) => theme.spacing._2XS};
-    border: none;
-    border-radius: ${({ theme }) => theme.borderRadius.SM};
-    background-color: ${({ theme }) => theme.colors.brand.secondary.medium};
-
+const CurrentInput = css`
+    border: ${({ theme }) =>
+        `${theme.borderWidth.MD} solid ${theme.colors.grayscale.dark}`};
+    background-color: transparent;
     cursor: pointer;
 
-    width: ${({ theme }) => theme.spacing._2XL};
-    aspect-ratio: 1;
+    transition: transform 200ms ease-in-out;
+
+    &:hover,
+    &:focus,
+    &:active {
+        transform: scale(1.05);
+        background-color: ${({ theme }) => theme.colors.brand.primary.light};
+    }
+`;
+
+const StandbyFilledInput = css`
+    border: ${({ theme }) =>
+        `${theme.borderWidth.MD} solid ${theme.colors.grayscale.medium}`};
+    background-color: ${({ theme }) => theme.colors.grayscale.medium};
+`;
+
+const ErrorInput = css`
+    border: ${({ theme }) =>
+        `${theme.borderWidth.MD} solid ${theme.colors.feedback.error.medium}`};
+    background-color: ${({ theme }) => theme.colors.feedback.error.medium};
+`;
+
+const WarnInput = css`
+    border: ${({ theme }) =>
+        `${theme.borderWidth.MD} solid ${theme.colors.feedback.warning.medium}`};
+    background-color: ${({ theme }) => theme.colors.feedback.warning.medium};
+`;
+
+const SuccessInput = css`
+    border: ${({ theme }) =>
+        `${theme.borderWidth.MD} solid ${theme.colors.feedback.success.darkest}`};
+    background-color: ${({ theme }) => theme.colors.feedback.success.darkest};
+`;
+
+const Container = styled.div`
+    padding: 0.25rem 0.5rem;
+    border-radius: ${({ theme }) => theme.borderRadius.SM};
+    background-color: ${({ theme }) => theme.colors.brand.secondary.medium};
 
     display: flex;
     align-items: center;
     justify-content: center;
 
-    ${({ state }) => state === "empty" && EmptyInput};
-    ${({ state }) => state === "filled" && FilledInput};
-    ${({ state }) => state === "disabled" && DisabledInput};
+    ${({ state }) => state === "current" && CurrentInput};
+    ${({ state }) => state === "standby" && StandbyFilledInput};
     ${({ state }) => state === "error" && ErrorInput};
     ${({ state }) => state === "warn" && WarnInput};
-    ${({ state }) => state === "succes" && SuccesInput};
-
-    &:hover,
-    &:focus,
-    &:active {
-        scale: 1.1;
-    }
+    ${({ state }) => state === "success" && SuccessInput};
 `;
 
 export default Container;

@@ -8,8 +8,8 @@ const Container = styled.header`
     width: 100%;
     background-color: ${({ theme }) => theme.colors.brand.primary.medium};
     color: ${({ theme }) => theme.colors.grayscale.white};
-    padding: ${({ theme }) => theme.spacing.XS}
-        ${({ theme }) => theme.spacing.LG};
+    padding: ${({ theme }) => theme.spacing._2XS}
+        ${({ theme }) => theme.spacing.SM};
 `;
 
 export default Container;

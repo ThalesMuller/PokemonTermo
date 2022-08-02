@@ -1,11 +1,10 @@
 import styled from "styled-components";
 
 const Container = styled.div`
-    display: flex;
-    flex-direction: column;
+    display: grid;
+    gap: ${({ theme }) => theme.spacing._3XS};
 
-    width: 100%;
-    min-height: 100vh;
+    flex: 1;
 `;
 
 export default Container;
