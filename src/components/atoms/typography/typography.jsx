@@ -18,6 +18,7 @@ const MAPPED_VARIANTS = {
     display: "span",
     code: "code",
     displayChar: "span",
+    displayKey: "span",
 };
 
 export const Typography = (props) => {
