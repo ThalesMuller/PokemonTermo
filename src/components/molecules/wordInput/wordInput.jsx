@@ -3,7 +3,7 @@ import { CharInput } from "../../atoms/charInput";
 import Container from "./styles";
 
 export const WordInput = (props) => {
-    const { size } = props;
+    const { size, state } = props;
 
     const initialValue = useCallback(() => {
         return Array(size)
@@ -12,11 +12,11 @@ export const WordInput = (props) => {
                 return {
                     id: index,
                     value: "",
-                    state: "empty",
+                    state: state,
                     ref: createRef(),
                 };
             });
-    }, [size]);
+    }, [size, state]);
     const [value, setValue] = useState(initialValue());
 
     const allFilled = useCallback(() => {

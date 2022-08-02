@@ -77,4 +77,10 @@ select {
         scroll-behavior: auto !important;
     }
 }
+
+html {
+    font-size: clamp(${({ theme }) => theme.fonts.size.XS}, 3.5vmin + 1rem, ${({
+    theme,
+}) => theme.fonts.size._3XL});
+}
 `;
