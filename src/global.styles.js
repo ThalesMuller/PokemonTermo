@@ -79,8 +79,12 @@ select {
 }
 
 html {
-    font-size: clamp(${({ theme }) => theme.fonts.size.XS}, 3.5vmin + 1rem, ${({
+    font-size: clamp(${({ theme }) => theme.fonts.size.XS}, 3vmin + 1rem, ${({
     theme,
 }) => theme.fonts.size._3XL});
+}
+
+#root, html, body {
+    height: 100%;
 }
 `;
