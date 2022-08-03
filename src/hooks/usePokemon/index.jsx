@@ -1,8 +1,9 @@
-import React, { useEffect } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { getAllPokemons, GENERATIONS } from "../../services/api";
 
 export const usePokemon = () => {
-    const [pokemons, setPokemons] = React.useState(null);
+    const [pokemons, setPokemons] = useState(null);
+    const [todayPokemon, setTodayPokemon] = useState(null);
 
     const isOnLocalStorage = () => {
         return localStorage.getItem("pokemon") !== null;
@@ -13,6 +14,7 @@ export const usePokemon = () => {
     };
     const setPokemonToLocalStorage = (pokemon) => {
         localStorage.setItem("pokemon", JSON.stringify(pokemon));
+        localStorage.setItem("pokemon_sync_date", new Date().toISOString());
     };
 
     const loadPokemons = async () => {
@@ -39,9 +41,20 @@ export const usePokemon = () => {
         setPokemonToLocalStorage(result);
     };
 
+    const getTodayPokemon = useCallback(() => {
+        const timestamp = Date.now();
+        const index = Math.floor(timestamp / 86400000) % pokemons.length;
+
+        return pokemons[index];
+    }, [pokemons]);
+
     useEffect(() => {
         loadPokemons();
     }, []);
 
-    return { pokemons };
+    useEffect(() => {
+        if (pokemons) setTodayPokemon(getTodayPokemon());
+    }, [pokemons]);
+
+    return { todayPokemon };
 };
