@@ -41,7 +41,7 @@ export const CharInput = forwardRef((props, ref) => {
                 variant='displayChar'
                 color={theme.colors.grayscale.white}
             >
-                a
+                {currentValue}
             </Typography>
         </Container>
     );

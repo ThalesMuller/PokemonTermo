@@ -242,8 +242,8 @@ export const newTheme = {
         LG: "8px",
     },
     shadows: {
-        level1: "0px 4px 16px rgba(0, 0, 0, 0.08)",
-        level2: "0px 8px 24px rgba(0, 0, 0, 0.08)",
+        level1: "0px 4px 16px rgba(0, 0, 0, 0.15)",
+        level2: "0px 8px 24px rgba(0, 0, 0, 0.15)",
         level3: "0px 16px 32px rgba(0, 0, 0, 0.08)",
         level4: "0px 16px 48px rgba(0, 0, 0, 0.08)",
     },
@@ -256,8 +256,8 @@ export const newTheme = {
         MD: "2rem",
         LG: "2.5rem",
         XL: "3rem",
-        _2XL: "3.5rem",
-        _3XL: "4rem",
+        _2XL: "3.25rem",
+        _3XL: "3.5rem",
     },
     opacities: {
         semiOpaque: "0.8",

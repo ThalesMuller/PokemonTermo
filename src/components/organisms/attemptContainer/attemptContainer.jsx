@@ -1,19 +1,29 @@
-import React from "react";
+import React, { useState, useCallback } from "react";
 import { WordInput } from "../../molecules/wordInput";
-import { useGame } from "../../../hooks/useGame";
+import { usePokemon } from "../../../hooks/usePokemon";
+import { useGame, MAX_ATTEMPTS } from "../../../hooks/useGame";
 import Container from "./styles";
 
 export const AttemptContainer = () => {
-    const { todayPokemon } = useGame();
+    const { todayPokemon } = usePokemon();
+    const { attempts } = useGame();
 
-    return (
-        <Container>
-            <WordInput size={todayPokemon.length} state='error' />
-            <WordInput size={todayPokemon.length} state='warn' />
-            <WordInput size={todayPokemon.length} state='success' />
-            <WordInput size={todayPokemon.length} state='current' />
-            <WordInput size={todayPokemon.length} state='standby' />
-            <WordInput size={todayPokemon.length} state='standby' />
-        </Container>
-    );
+    const renderAttempts = useCallback(() => {
+        if (!todayPokemon || !attempts) {
+            return <>loading...</>;
+        }
+
+        return attempts.map((attempt, index) => {
+            return (
+                <WordInput
+                    key={index}
+                    size={todayPokemon.length}
+                    state={attempt.state}
+                    values={attempt.values}
+                />
+            );
+        });
+    }, [attempts, todayPokemon]);
+
+    return <Container>{renderAttempts()}</Container>;
 };

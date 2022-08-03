@@ -45,9 +45,14 @@ const Container = styled.div`
     border-radius: ${({ theme }) => theme.borderRadius.SM};
     background-color: ${({ theme }) => theme.colors.brand.secondary.medium};
 
+    width: 1.5rem;
+    aspect-ratio: 1;
+
     display: flex;
     align-items: center;
     justify-content: center;
+
+    box-shadow: ${({ theme }) => theme.shadows.level1};
 
     ${({ state }) => state === "current" && CurrentInput};
     ${({ state }) => state === "standby" && StandbyFilledInput};
