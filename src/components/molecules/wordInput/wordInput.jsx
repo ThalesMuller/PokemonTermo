@@ -83,5 +83,5 @@ export const WordInput = (props) => {
         });
     }, [value]);
 
-    return <Container>{renderInputs()} </Container>;
+    return <Container>{renderInputs()}</Container>;
 };

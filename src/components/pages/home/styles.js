@@ -5,7 +5,7 @@ const Container = styled.div`
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    gap: ${({ theme }) => theme.spacing.SM};
+    gap: ${({ theme }) => theme.spacing.XS};
 
     width: 100%;
     height: 100%;
