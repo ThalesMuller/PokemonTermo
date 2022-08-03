@@ -15,6 +15,10 @@ const Container = styled.div`
 
     transition: scale 200ms ease-in-out;
 
+    min-width: 1.5rem;
+
+    box-shadow: ${({ theme }) => theme.shadows.level1};
+
     &:hover {
         background-color: ${({ theme }) => theme.colors.grayscale.dark};
         transform: scale(1.05);
