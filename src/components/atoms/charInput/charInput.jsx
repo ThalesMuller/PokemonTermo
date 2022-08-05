@@ -37,10 +37,7 @@ export const CharInput = forwardRef((props, ref) => {
             disabled={isDisabled()}
             tabIndex={isDisabled() ? -1 : 0}
         >
-            <Typography
-                variant='displayChar'
-                color={theme.colors.grayscale.white}
-            >
+            <Typography variant='displayChar' color={theme.colors.grayscale.white}>
                 {currentValue}
             </Typography>
         </Container>

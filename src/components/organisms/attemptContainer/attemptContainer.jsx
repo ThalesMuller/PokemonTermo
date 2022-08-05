@@ -14,14 +14,7 @@ export const AttemptContainer = () => {
         }
 
         return attempts.map((attempt, index) => {
-            return (
-                <WordInput
-                    key={index}
-                    size={todayPokemon.length}
-                    state={attempt.state}
-                    values={attempt.values}
-                />
-            );
+            return <WordInput key={index} size={todayPokemon.length} state={attempt.state} values={attempt.values} />;
         });
     }, [attempts, todayPokemon]);
 

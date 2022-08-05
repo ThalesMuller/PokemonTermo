@@ -30,12 +30,7 @@ export const usePokemon = () => {
 
                 return pokemon.name;
             })
-            .filter(
-                (pokemon) =>
-                    pokemon.length > 4 &&
-                    pokemon.length < 10 &&
-                    !pokemon.includes("-"),
-            );
+            .filter((pokemon) => pokemon.length > 4 && pokemon.length < 10 && !pokemon.includes("-"));
 
         setPokemons(result);
         setPokemonToLocalStorage(result);

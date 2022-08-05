@@ -66,8 +66,7 @@ const displayKey = css`
 `;
 
 const Container = styled.div`
-    color: ${({ theme, fontColor }) =>
-        fontColor || theme.colors.grayscale.white};
+    color: ${({ theme, fontColor }) => fontColor || theme.colors.grayscale.white};
 
     ${({ variant }) => variant === "h1" && h1};
     ${({ variant }) => variant === "h2" && h2};

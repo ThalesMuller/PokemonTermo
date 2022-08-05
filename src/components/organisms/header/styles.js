@@ -9,8 +9,7 @@ const Container = styled.header`
     width: 100%;
     background-color: ${({ theme }) => theme.colors.brand.primary.medium};
     color: ${({ theme }) => theme.colors.grayscale.white};
-    padding: ${({ theme }) => theme.spacing._2XS}
-        ${({ theme }) => theme.spacing.SM};
+    padding: ${({ theme }) => theme.spacing._2XS} ${({ theme }) => theme.spacing.SM};
 
     box-shadow: ${({ theme }) => theme.shadows.level1};
     z-index: 2;

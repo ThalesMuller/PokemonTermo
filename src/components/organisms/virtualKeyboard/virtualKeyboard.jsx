@@ -70,12 +70,7 @@ export const VirtualKeyboard = () => {
     const renderKey = (key) => {
         if (key === "backspace") {
             return (
-                <KeyboardKey
-                    key={key}
-                    keyName={key}
-                    onClick={onBackspaceClick}
-                    disabled={isDisabled(key)}
-                >
+                <KeyboardKey key={key} keyName={key} onClick={onBackspaceClick} disabled={isDisabled(key)}>
                     {<MdBackspace size='0.9rem' />}
                 </KeyboardKey>
             );

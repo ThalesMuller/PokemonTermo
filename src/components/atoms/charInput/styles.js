@@ -12,8 +12,7 @@ const Blink = keyframes`
 const CurrentInput = css`
     position: relative;
 
-    border: ${({ theme }) =>
-        `${theme.borderWidth.MD} solid ${theme.colors.grayscale.dark}`};
+    border: ${({ theme }) => `${theme.borderWidth.MD} solid ${theme.colors.grayscale.dark}`};
     background-color: transparent;
     cursor: pointer;
 
@@ -59,32 +58,27 @@ const CurrentInput = css`
 `;
 
 const StandbyFilledInput = css`
-    border: ${({ theme }) =>
-        `${theme.borderWidth.MD} solid ${theme.colors.brand.primary.dark}`};
+    border: ${({ theme }) => `${theme.borderWidth.MD} solid ${theme.colors.brand.primary.dark}`};
     background-color: ${({ theme }) => theme.colors.brand.primary.dark};
 `;
 
 const ErrorInput = css`
-    border: ${({ theme }) =>
-        `${theme.borderWidth.MD} solid ${theme.colors.feedback.error.medium}`};
+    border: ${({ theme }) => `${theme.borderWidth.MD} solid ${theme.colors.feedback.error.medium}`};
     background-color: ${({ theme }) => theme.colors.feedback.error.medium};
 `;
 
 const WarnInput = css`
-    border: ${({ theme }) =>
-        `${theme.borderWidth.MD} solid ${theme.colors.feedback.warning.medium}`};
+    border: ${({ theme }) => `${theme.borderWidth.MD} solid ${theme.colors.feedback.warning.medium}`};
     background-color: ${({ theme }) => theme.colors.feedback.warning.medium};
 `;
 
 const SuccessInput = css`
-    border: ${({ theme }) =>
-        `${theme.borderWidth.MD} solid ${theme.colors.feedback.success.darkest}`};
+    border: ${({ theme }) => `${theme.borderWidth.MD} solid ${theme.colors.feedback.success.darkest}`};
     background-color: ${({ theme }) => theme.colors.feedback.success.darkest};
 `;
 
 const Container = styled.div`
-    padding: ${({ theme }) => theme.spacing._3XS}
-        ${({ theme }) => theme.spacing._2XS};
+    padding: ${({ theme }) => theme.spacing._3XS} ${({ theme }) => theme.spacing._2XS};
     border-radius: ${({ theme }) => theme.borderRadius.SM};
     background-color: ${({ theme }) => theme.colors.brand.secondary.medium};
 

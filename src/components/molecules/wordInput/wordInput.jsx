@@ -49,10 +49,7 @@ export const WordInput = (props) => {
             value: refValue,
         };
 
-        let newValue = [
-            ...value.filter((item) => item.id !== index),
-            currentItem,
-        ];
+        let newValue = [...value.filter((item) => item.id !== index), currentItem];
         newValue.sort((a, b) => a.id - b.id);
 
         setValue(newValue);
@@ -72,13 +69,7 @@ export const WordInput = (props) => {
     const renderInputs = useCallback(() => {
         return value.map((char, index) => {
             return (
-                <CharInput
-                    key={index}
-                    index={char.id}
-                    handleChange={handleChange}
-                    ref={char.ref}
-                    state={char.state}
-                />
+                <CharInput key={index} index={char.id} handleChange={handleChange} ref={char.ref} state={char.state} />
             );
         });
     }, [value]);
