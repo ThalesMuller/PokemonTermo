@@ -24,8 +24,7 @@ const Container = styled.div`
     background-color: ${({ theme }) => theme.colors.grayscale.darkest};
 
     border-radius: ${({ theme }) => theme.borderRadius.SM};
-    padding: ${({ theme }) => theme.spacing._3XS}
-        ${({ theme }) => theme.spacing._2XS};
+    padding: ${({ theme }) => theme.spacing._3XS} ${({ theme }) => theme.spacing._2XS};
 
     user-select: none;
 
