@@ -37,9 +37,6 @@ html:focus-within {
 body {
     min-height: 100vh;
     text-rendering: optimizeSpeed;
-    line-height: ${({ theme }) => theme.fonts.height.MD};
-    font-weight: ${({ theme }) => theme.fonts.weight.regular};
-    font-family: ${({ theme }) => theme.fonts.family.highlight};
 }
 
 /* A elements that don't have a class get default styles */
@@ -79,9 +76,14 @@ select {
 }
 
 html {
-    font-size: clamp(${({ theme }) => theme.fonts.size.XS}, 3vmin + 1rem, ${({
-    theme,
-}) => theme.fonts.size._3XL});
+    --min-font-size: ${({ theme }) => theme.fonts.size.XS};
+    --ideal-font-size: calc(3vmin + ${({ theme }) => theme.fonts.size.XS});
+    --max-font-size: ${({ theme }) => theme.fonts.size._3XL};
+    font-size: clamp(var(--min-font-size), var(--ideal-font-size), var(--max-font-size));
+
+    line-height: ${({ theme }) => theme.fonts.height.MD};
+    font-weight: ${({ theme }) => theme.fonts.weight.regular};
+    font-family: ${({ theme }) => theme.fonts.family.highlight};
 }
 
 #root, html, body {
