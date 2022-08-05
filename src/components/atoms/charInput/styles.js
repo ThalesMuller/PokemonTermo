@@ -1,51 +1,82 @@
-import styled, { css } from "styled-components";
+import styled, { css, keyframes } from "styled-components";
+
+const Blink = keyframes`
+    from, to {
+        opacity: 0;
+    }
+    50% {
+        opacity: 0.8;
+    }
+`;
 
 const CurrentInput = css`
-    border: ${({ theme }) =>
-        `${theme.borderWidth.MD} solid ${theme.colors.grayscale.dark}`};
+    position: relative;
+
+    border: ${({ theme }) => `${theme.borderWidth.MD} solid ${theme.colors.grayscale.dark}`};
     background-color: transparent;
     cursor: pointer;
 
     transition: transform 200ms ease-in-out;
 
-    &:hover,
-    &:focus,
-    &:active {
+    &::after {
+        content: "";
+        background-color: ${({ theme }) => theme.colors.grayscale.dark};
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        height: ${({ theme }) => theme.borderWidth.MD};
+
+        transform: scaleX(0);
+        transition: transform 150ms 200ms ease;
+        transform-origin: bottom center;
+    }
+
+    &:hover:not(:active, :focus) {
         transform: scale(1.05);
         background-color: ${({ theme }) => theme.colors.brand.primary.light};
+    }
+
+    &[data-active="true"] {
+        cursor: unset;
+        background-color: ${({ theme }) => theme.colors.brand.primary.light};
+    }
+
+    &[data-active="true"] {
+        box-shadow: ${({ theme }) => theme.shadows.level2};
+        &::after {
+            transform: scaleX(1);
+            animation: ${Blink} 1250ms ease-in-out 190ms infinite;
+        }
     }
 `;
 
 const StandbyFilledInput = css`
-    border: ${({ theme }) =>
-        `${theme.borderWidth.MD} solid ${theme.colors.grayscale.medium}`};
-    background-color: ${({ theme }) => theme.colors.grayscale.medium};
+    border: ${({ theme }) => `${theme.borderWidth.MD} solid ${theme.colors.brand.primary.dark}`};
+    background-color: ${({ theme }) => theme.colors.brand.primary.dark};
 `;
 
 const ErrorInput = css`
-    border: ${({ theme }) =>
-        `${theme.borderWidth.MD} solid ${theme.colors.feedback.error.medium}`};
+    border: ${({ theme }) => `${theme.borderWidth.MD} solid ${theme.colors.feedback.error.medium}`};
     background-color: ${({ theme }) => theme.colors.feedback.error.medium};
 `;
 
 const WarnInput = css`
-    border: ${({ theme }) =>
-        `${theme.borderWidth.MD} solid ${theme.colors.feedback.warning.medium}`};
+    border: ${({ theme }) => `${theme.borderWidth.MD} solid ${theme.colors.feedback.warning.medium}`};
     background-color: ${({ theme }) => theme.colors.feedback.warning.medium};
 `;
 
 const SuccessInput = css`
-    border: ${({ theme }) =>
-        `${theme.borderWidth.MD} solid ${theme.colors.feedback.success.darkest}`};
+    border: ${({ theme }) => `${theme.borderWidth.MD} solid ${theme.colors.feedback.success.darkest}`};
     background-color: ${({ theme }) => theme.colors.feedback.success.darkest};
 `;
 
 const Container = styled.div`
-    padding: 0.25rem 0.5rem;
+    padding: ${({ theme }) => theme.spacing._3XS} ${({ theme }) => theme.spacing._2XS};
     border-radius: ${({ theme }) => theme.borderRadius.SM};
     background-color: ${({ theme }) => theme.colors.brand.secondary.medium};
 
-    width: 1.5rem;
+    width: ${({ theme }) => theme.spacing.SM};
     aspect-ratio: 1;
 
     display: flex;
@@ -53,6 +84,10 @@ const Container = styled.div`
     justify-content: center;
 
     box-shadow: ${({ theme }) => theme.shadows.level1};
+
+    &:focus-visible {
+        outline: none;
+    }
 
     ${({ state }) => state === "current" && CurrentInput};
     ${({ state }) => state === "standby" && StandbyFilledInput};

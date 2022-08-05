@@ -2,6 +2,7 @@ import React, { useEffect, useRef } from "react";
 import { KeyboardKey } from "../../atoms/keyboardKey";
 import { Typography } from "../../atoms/typography";
 import { MdBackspace } from "react-icons/md";
+import { useGame } from "../../../hooks/useGame";
 import Container, { KeyRow } from "./styles";
 
 const FIRST_ROW = "Q W E R T Y U I O P";
@@ -10,15 +11,17 @@ const THIRD_ROW = "Z X C V B N M enter";
 
 export const VirtualKeyboard = () => {
     const keyBoardRef = useRef();
+    const { confirmAttempt, setKey, eraseLastCharacter } = useGame();
 
     const onKeyClick = (key) => {
-        console.log(key);
+        setKey(key);
     };
+
     const onBackspaceClick = () => {
-        console.log("backspace");
+        eraseLastCharacter();
     };
     const onEnterClick = () => {
-        console.log("enter");
+        confirmAttempt();
     };
 
     const isDisabled = (key) => {
@@ -70,13 +73,8 @@ export const VirtualKeyboard = () => {
     const renderKey = (key) => {
         if (key === "backspace") {
             return (
-                <KeyboardKey
-                    key={key}
-                    keyName={key}
-                    onClick={onBackspaceClick}
-                    disabled={isDisabled(key)}
-                >
-                    {<MdBackspace size='0.9rem' />}
+                <KeyboardKey key={key} keyName={key} onClick={onBackspaceClick} disabled={isDisabled(key)}>
+                    {<MdBackspace size='0.7em' />}
                 </KeyboardKey>
             );
         }

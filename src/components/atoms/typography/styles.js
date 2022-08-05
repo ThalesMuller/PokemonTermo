@@ -5,8 +5,7 @@ const h1 = css`
     font-size: ${({ theme }) => theme.fonts.size.LG};
     font-weight: ${({ theme }) => theme.fonts.weight.bold};
     line-height: ${({ theme }) => theme.fonts.height.MD};
-    text-shadow: 5px 5px 3px
-        ${({ theme }) => theme.colors.brand.secondary.darkest};
+    text-shadow: 5px 5px 3px ${({ theme }) => theme.colors.support.blue};
 `;
 const h2 = css`
     font-family: ${({ theme }) => theme.fonts.family.highlight};
@@ -67,8 +66,7 @@ const displayKey = css`
 `;
 
 const Container = styled.div`
-    color: ${({ theme, fontColor }) =>
-        fontColor || theme.colors.grayscale.white};
+    color: ${({ theme, fontColor }) => fontColor || theme.colors.grayscale.white};
 
     ${({ variant }) => variant === "h1" && h1};
     ${({ variant }) => variant === "h2" && h2};

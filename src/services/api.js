@@ -67,9 +67,7 @@ export const GENERATIONS = {
 
 export const getAllPokemons = async (limit, offset) => {
     try {
-        const response = await api.get(
-            `/pokemon?limit=${limit || 100000}&offset=${offset || 0}`,
-        );
+        const response = await api.get(`/pokemon?limit=${limit || 100000}&offset=${offset || 0}`);
         return response.data;
     } catch (error) {
         console.log(error);

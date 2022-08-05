@@ -8,10 +8,7 @@ export const Header = () => {
 
     return (
         <Container>
-            <Typography
-                variant='h1'
-                color={theme.colors.brand.secondary.medium}
-            >
+            <Typography variant='h1' color={theme.colors.brand.secondary.medium}>
                 Pokémon Termo
             </Typography>
         </Container>

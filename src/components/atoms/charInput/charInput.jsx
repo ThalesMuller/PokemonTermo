@@ -1,48 +1,38 @@
-import React, { useState, forwardRef, useCallback } from "react";
+import React, { useCallback } from "react";
 import { Typography } from "../typography";
 import { useTheme } from "styled-components";
 import Container from "./styles";
+import { useGame } from "../../../hooks/useGame";
 
-export const CharInput = forwardRef((props, ref) => {
-    const { handleChange, state, index } = props;
-    const [currentValue, setCurrentValue] = useState("");
+export const CharInput = (props) => {
+    const { state, value, index, active } = props;
+
+    const { handleCharClick } = useGame();
     const theme = useTheme();
 
     const isDisabled = useCallback(() => {
         return state !== "current";
     }, [state]);
 
-    const onChange = (e) => {
+    const onClick = () => {
         if (isDisabled()) return;
-        const { value } = e.target;
 
-        if (value.length > 1) return;
-
-        setCurrentValue(value);
-        handleChange(ref, index);
-    };
-    const onClick = (e) => {
-        if (isDisabled() || !currentValue) return;
-
-        ref.current.select();
+        handleCharClick(index);
     };
 
     return (
         <Container
-            ref={ref}
             state={state}
-            value={currentValue}
-            onChange={onChange}
+            value={value}
             onClick={onClick}
+            onFocus={onClick}
             disabled={isDisabled()}
             tabIndex={isDisabled() ? -1 : 0}
+            data-active={active}
         >
-            <Typography
-                variant='displayChar'
-                color={theme.colors.grayscale.white}
-            >
-                {currentValue}
+            <Typography variant='displayChar' color={theme.colors.grayscale.white}>
+                {value}
             </Typography>
         </Container>
     );
-});
+};
