@@ -51,5 +51,5 @@ export const usePokemon = () => {
         if (pokemons) setTodayPokemon(getTodayPokemon());
     }, [pokemons]);
 
-    return { todayPokemon };
+    return { todayPokemon, pokemons };
 };

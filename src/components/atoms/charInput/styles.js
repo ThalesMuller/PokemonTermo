@@ -37,23 +37,17 @@ const CurrentInput = css`
         background-color: ${({ theme }) => theme.colors.brand.primary.light};
     }
 
-    &:focus,
-    &:active {
+    &[data-active="true"] {
         cursor: unset;
         background-color: ${({ theme }) => theme.colors.brand.primary.light};
     }
 
-    &:focus,
-    &:active {
+    &[data-active="true"] {
         box-shadow: ${({ theme }) => theme.shadows.level2};
         &::after {
             transform: scaleX(1);
             animation: ${Blink} 1250ms ease-in-out 190ms infinite;
         }
-    }
-
-    &:focus-visible {
-        outline: none;
     }
 `;
 
@@ -90,6 +84,10 @@ const Container = styled.div`
     justify-content: center;
 
     box-shadow: ${({ theme }) => theme.shadows.level1};
+
+    &:focus-visible {
+        outline: none;
+    }
 
     ${({ state }) => state === "current" && CurrentInput};
     ${({ state }) => state === "standby" && StandbyFilledInput};

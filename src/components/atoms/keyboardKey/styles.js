@@ -6,8 +6,8 @@ const Waving = keyframes`
         opacity: 0;
     }
     50% {
-        transform: translate(-50%, -50%) scale(3);
-        opacity: 0.6;
+        transform: translate(-50%, -50%) scale(4);
+        opacity: 0.5;
     }
 `;
 
@@ -40,7 +40,7 @@ const Container = styled.div`
     &:hover {
         transform: scale(1.05);
         &::after {
-            animation: ${Waving} 2000ms ease-in-out 190ms infinite;
+            animation: ${Waving} 2000ms ease-in-out infinite;
         }
     }
 
@@ -63,6 +63,7 @@ const Container = styled.div`
         height: ${({ theme }) => theme.spacing.SM};
 
         border-radius: ${({ theme }) => theme.borderRadius.circle};
+        border: ${({ theme }) => `${theme.borderWidth.SM} solid ${theme.colors.grayscale.white}`};
 
         background-color: ${({ theme }) => theme.colors.grayscale.dark};
     }

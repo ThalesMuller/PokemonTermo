@@ -1,29 +1,11 @@
-import React, { useCallback, useState, createRef } from "react";
+import React, { useCallback } from "react";
 import { CharInput } from "../../atoms/charInput";
 import Container from "./styles";
 
 export const WordInput = (props) => {
-    const { size, state } = props;
+    const { state, values, selectedIndex } = props;
 
-    const initialValue = useCallback(() => {
-        return Array(size)
-            .fill({})
-            .map((c, index) => {
-                return {
-                    id: index,
-                    value: "",
-                    state: state,
-                    ref: createRef(),
-                };
-            });
-    }, [size, state]);
-    const [value, setValue] = useState(initialValue());
-
-    const allFilled = useCallback(() => {
-        return value.every((item) => item.value.length > 0);
-    }, [value]);
-
-    const nextInput = (nextIndex) => {
+    /* const nextInput = (nextIndex) => {
         const nextItem = value[nextIndex];
 
         if (nextItem) {
@@ -64,15 +46,28 @@ export const WordInput = (props) => {
         }
 
         lastInput(index - 1);
-    };
+    }; */
+
+    const isActive = useCallback(
+        (index) => {
+            return selectedIndex === index || (selectedIndex === -1 && index === 0);
+        },
+        [selectedIndex],
+    );
 
     const renderInputs = useCallback(() => {
-        return value.map((char, index) => {
+        return values.map((char, index) => {
             return (
-                <CharInput key={index} index={char.id} handleChange={handleChange} ref={char.ref} state={char.state} />
+                <CharInput
+                    key={index}
+                    index={char.id}
+                    state={char.state}
+                    value={char.value}
+                    active={isActive(char.id)}
+                />
             );
         });
-    }, [value]);
+    }, [values, state, selectedIndex]);
 
     return <Container>{renderInputs()}</Container>;
 };
