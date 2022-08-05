@@ -11,11 +11,7 @@ export const KeyboardKey = (props) => {
     };
 
     return (
-        <Container
-            tabIndex={disabled ? -1 : 0}
-            disabled={disabled}
-            onClick={handleClick}
-        >
+        <Container tabIndex={-1} disabled={disabled} onClick={handleClick}>
             {children}
         </Container>
     );
