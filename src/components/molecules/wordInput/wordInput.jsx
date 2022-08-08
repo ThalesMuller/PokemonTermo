@@ -3,7 +3,7 @@ import { CharInput } from "../../atoms/charInput";
 import Container from "./styles";
 
 export const WordInput = (props) => {
-    const { key, state, values, selectedIndex } = props;
+    const { state, values, selectedIndex, error } = props;
 
     const isActive = useCallback(
         (index) => {
@@ -21,10 +21,11 @@ export const WordInput = (props) => {
                     state={char.state}
                     value={char.value}
                     active={isActive(char.id)}
+                    errorState={error}
                 />
             );
         });
-    }, [values, state, selectedIndex]);
+    }, [values, state, selectedIndex, error]);
 
-    return <Container key={key}>{renderInputs()}</Container>;
+    return <Container>{renderInputs()}</Container>;
 };

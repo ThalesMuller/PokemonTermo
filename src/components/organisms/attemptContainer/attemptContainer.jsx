@@ -11,6 +11,7 @@ export const AttemptContainer = () => {
             return (
                 <WordInput
                     key={index}
+                    error={attempt.error}
                     state={attempt.state}
                     values={attempt.values}
                     selectedIndex={attempt.selectedIndex}

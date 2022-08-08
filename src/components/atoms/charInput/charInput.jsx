@@ -5,7 +5,7 @@ import Container from "./styles";
 import { useGame } from "../../../hooks/useGame";
 
 export const CharInput = (props) => {
-    const { state, value, index, active } = props;
+    const { state, value, index, active, errorState } = props;
 
     const { handleCharClick } = useGame();
     const theme = useTheme();
@@ -19,16 +19,15 @@ export const CharInput = (props) => {
 
         handleCharClick(index);
     };
-
     return (
         <Container
             state={state}
             value={value}
             onClick={onClick}
-            onFocus={onClick}
             disabled={isDisabled()}
             tabIndex={isDisabled() ? -1 : 0}
             data-active={active}
+            data-error={errorState}
         >
             <Typography variant='displayChar' color={theme.colors.grayscale.white}>
                 {value}

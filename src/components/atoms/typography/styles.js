@@ -55,7 +55,7 @@ const display = css``;
 const code = css``;
 const displayChar = css`
     font-family: ${({ theme }) => theme.fonts.family.highlight};
-    font-size: ${({ theme }) => theme.fonts.size._3XS};
+    font-size: ${({ theme }) => theme.fonts.size._4XS};
     font-weight: ${({ theme }) => theme.fonts.weight.bold};
     line-height: ${({ theme }) => theme.fonts.height.LG};
 
