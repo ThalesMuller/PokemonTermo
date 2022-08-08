@@ -12,11 +12,13 @@ export const ModalContent = styled.div`
     left: 50%;
     transform: translate(-50%, -50%);
     z-index: 2;
-    background-color: white;
+    background-color: ${({ theme }) => theme.colors.grayscale.darkest};
     border-radius: ${({ theme }) => theme.borderRadius.SM};
 
     width: 30vw;
-    height: 30vw;
+    height: auto;
+
+    padding: ${({ theme }) => theme.spacing._2XS} ${({ theme }) => theme.spacing.XS};
 `;
 export const ModalBackground = styled.div`
     position: absolute;
