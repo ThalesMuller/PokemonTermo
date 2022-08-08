@@ -10,9 +10,8 @@ export const Layout = () => {
     const [showModal, setShowModal] = React.useState(false);
 
     const modalContent = useCallback(() => {
-        return <EndGameModal win={true} />;
-
-        // return <HowToPlayModal />
+        return <HowToPlayModal />;
+        // return <EndGameModal win={true} />;
     }, []);
 
     return (
