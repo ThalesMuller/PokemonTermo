@@ -1,6 +1,7 @@
 import defaultColorScheme from "./defaultColorScheme";
 
 const defaultSpacings = {
+    _4XS: "0.1rem",
     _3XS: "0.25rem",
     _2XS: "0.5rem",
     XS: "1rem",
@@ -50,8 +51,9 @@ const defaultFontFamilies = {
 };
 
 const defaultFontSizes = {
-    _4XS: "0.5rem",
-    _3XS: "0.6rem",
+    _5XS: "0.5rem",
+    _4XS: "0.6rem",
+    _3XS: "0.75rem",
     _2XS: "0.8rem",
     XS: "1rem",
     SM: "1.2rem",
