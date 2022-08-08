@@ -17,13 +17,14 @@ const MAPPED_VARIANTS = {
     overline: "span",
     display: "span",
     code: "code",
+    inlineChart: "span",
     displayChar: "span",
     displayKey: "span",
     tableCell: "span",
 };
 
 export const Typography = (props) => {
-    const { children, variant, color } = props;
+    const { children, variant, color, className } = props;
 
     return (
         <Container
@@ -31,6 +32,7 @@ export const Typography = (props) => {
             variant={variant}
             fontColor={color}
             data-testid={`typography_${variant}`}
+            className={className}
         >
             {children}
         </Container>

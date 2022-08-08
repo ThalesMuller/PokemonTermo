@@ -33,10 +33,11 @@ const h6 = css``;
 const subtitle1 = css``;
 const subtitle2 = css``;
 const body1 = css`
+    display: inline;
     font-family: ${({ theme }) => theme.fonts.family.base};
-    font-size: ${({ theme }) => theme.fonts.size.MD};
+    font-size: ${({ theme }) => theme.fonts.size._5XS};
     font-weight: ${({ theme }) => theme.fonts.weight.regular};
-    line-height: ${({ theme }) => theme.fonts.height.MD};
+    line-height: ${({ theme }) => theme.fonts.height.LG};
 
     max-width: 45ch;
 `;
@@ -62,6 +63,15 @@ const displayChar = css`
     text-align: center;
     text-transform: uppercase;
 `;
+const displayInline = css`
+    font-family: ${({ theme }) => theme.fonts.family.highlight};
+    font-size: ${({ theme }) => theme.fonts.size._5XS};
+    font-weight: ${({ theme }) => theme.fonts.weight.bold};
+    line-height: ${({ theme }) => theme.fonts.height.SM};
+
+    text-align: center;
+    text-transform: uppercase;
+`;
 const displayKey = css`
     font-family: ${({ theme }) => theme.fonts.family.highlight};
     font-size: ${({ theme }) => theme.fonts.size._3XS};
@@ -80,6 +90,7 @@ const tableCell = css`
 `;
 
 const Container = styled.div`
+    display: inline-block;
     color: ${({ theme, fontColor }) => fontColor || theme.colors.grayscale.white};
 
     ${({ variant }) => variant === "h1" && h1};
@@ -100,6 +111,7 @@ const Container = styled.div`
     ${({ variant }) => variant === "displayChar" && displayChar};
     ${({ variant }) => variant === "displayKey" && displayKey};
     ${({ variant }) => variant === "tableCell" && tableCell};
+    ${({ variant }) => variant === "displayInline" && displayInline};
 `;
 
 export default Container;

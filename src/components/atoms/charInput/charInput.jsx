@@ -5,7 +5,7 @@ import Container from "./styles";
 import { useGame } from "../../../hooks/useGame";
 
 export const CharInput = (props) => {
-    const { state, value, index, active, errorState } = props;
+    const { state, value, index, active, errorState, inline } = props;
 
     const { handleCharClick } = useGame();
     const theme = useTheme();
@@ -29,7 +29,7 @@ export const CharInput = (props) => {
             data-active={active}
             data-error={errorState}
         >
-            <Typography variant='displayChar' color={theme.colors.grayscale.white}>
+            <Typography variant={inline ? "displayInline" : "displayChar"} color={theme.colors.grayscale.white}>
                 {value}
             </Typography>
         </Container>
