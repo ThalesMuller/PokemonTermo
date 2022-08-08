@@ -79,7 +79,7 @@ html {
     --min-font-size: ${({ theme }) => theme.fonts.size.XS};
     --ideal-font-size: calc(3vmin + ${({ theme }) => theme.fonts.size.XS});
     --max-font-size: ${({ theme }) => theme.fonts.size._3XL};
-    font-size: clamp(var(--min-font-size), var(--ideal-font-size), var(--max-font-size));
+    // font-size: clamp(var(--min-font-size), var(--ideal-font-size), var(--max-font-size));
 
     line-height: ${({ theme }) => theme.fonts.height.MD};
     font-weight: ${({ theme }) => theme.fonts.weight.regular};

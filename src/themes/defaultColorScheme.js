@@ -84,8 +84,29 @@ const defaultPokemonTypeColors = {
     fairy: "#fdb9e9",
 };
 
+const defaultTableColors = {
+    header: "#342E37",
+    yellow: {
+        light: "#FCDC0E",
+        dark: "#FFE743",
+    },
+    red: {
+        light: "#FF1C46",
+        dark: "#F90936",
+    },
+    blue: {
+        light: "#286CFF",
+        dark: "#155EFD",
+    },
+    purple: {
+        light: "#F646FF",
+        dark: "#F62BFF",
+    },
+};
+
 const defaultOtherColors = {
     pokemonTypes: defaultPokemonTypeColors,
+    table: defaultTableColors,
 };
 
 const defaultColorScheme = {

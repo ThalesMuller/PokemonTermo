@@ -1,0 +1,1 @@
+export { TabelaYasmin } from "./tabelaYasmin";
