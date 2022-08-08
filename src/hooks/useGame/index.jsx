@@ -7,11 +7,11 @@ export const MAX_ATTEMPTS = 6;
 export const useGame = () => {
     const { attempts, setAttempts } = useContext(AttemptsContext);
     const { pokemons, todayPokemon } = usePokemon();
-    const wordSize = 6;
 
     useEffect(() => {
+        if (!todayPokemon) return;
         startGame();
-    }, []);
+    }, [todayPokemon]);
 
     const isAttemptCompleted = (attempt, checkCurrent) => {
         if ((checkCurrent && attempt.state === "current") || attempt.state === "empty" || !attempt.values.length)
@@ -20,19 +20,13 @@ export const useGame = () => {
         return true;
     };
 
-    const isGameOver = useCallback(() => {
-        if (!attempts.length) return false;
-
-        return attempts.every((attempt) => isAttemptCompleted(attempt));
-    }, [attempts]);
-
     const initAttempts = () => {
         const newAttempts = Array(MAX_ATTEMPTS).fill({});
         setAttempts(
             newAttempts.map((c, index) => {
                 return {
                     id: index,
-                    values: Array(wordSize)
+                    values: Array(todayPokemon.length)
                         .fill("")
                         .map((value, i) => {
                             return {
@@ -100,22 +94,8 @@ export const useGame = () => {
         newAttempts[currentAttempt.id] = {
             ...currentAttempt,
             values: newValues,
-            selectedIndex: currentValueIndex + 1 <= wordSize - 1 ? currentValueIndex + 1 : -2,
+            selectedIndex: currentValueIndex + 1 <= todayPokemon.length - 1 ? currentValueIndex + 1 : -2,
         };
-
-        setAttempts(newAttempts);
-    };
-
-    const setCurrentAttempt = (index) => {
-        const newAttempts = [...attempts];
-        newAttempts[index].state = "current";
-        newAttempts[index].selectedIndex = 0;
-        newAttempts[index].values = newAttempts[index].values.map((value) => {
-            return {
-                ...value,
-                state: "current",
-            };
-        });
 
         setAttempts(newAttempts);
     };
@@ -194,5 +174,5 @@ export const useGame = () => {
         setAttempts(newAttempts);
     };
 
-    return { confirmAttempt, setKey, eraseLastCharacter, handleCharClick };
+    return { confirmAttempt, setKey, eraseLastCharacter, handleCharClick, todayPokemon };
 };
