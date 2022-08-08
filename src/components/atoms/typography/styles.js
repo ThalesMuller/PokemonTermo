@@ -21,7 +21,14 @@ const h3 = css`
 `;
 
 const h4 = css``;
-const h5 = css``;
+const h5 = css`
+    font-family: ${({ theme }) => theme.fonts.family.highlight};
+    font-size: ${({ theme }) => theme.fonts.size.XS};
+    font-weight: ${({ theme }) => theme.fonts.weight.bold};
+    line-height: ${({ theme }) => theme.fonts.height.MD};
+    margin: 0;
+`;
+
 const h6 = css``;
 const subtitle1 = css``;
 const subtitle2 = css``;
@@ -48,7 +55,7 @@ const display = css``;
 const code = css``;
 const displayChar = css`
     font-family: ${({ theme }) => theme.fonts.family.highlight};
-    font-size: ${({ theme }) => theme.fonts.size._3XS};
+    font-size: ${({ theme }) => theme.fonts.size._4XS};
     font-weight: ${({ theme }) => theme.fonts.weight.bold};
     line-height: ${({ theme }) => theme.fonts.height.LG};
 
@@ -63,6 +70,13 @@ const displayKey = css`
 
     text-align: center;
     text-transform: uppercase;
+`;
+
+const tableCell = css`
+    font-family: ${({ theme }) => theme.fonts.family.base};
+    font-size: ${({ theme }) => theme.fonts.size._2XS};
+    font-weight: ${({ theme }) => theme.fonts.weight.regular};
+    line-height: ${({ theme }) => theme.fonts.height.MD};
 `;
 
 const Container = styled.div`
@@ -85,6 +99,7 @@ const Container = styled.div`
     ${({ variant }) => variant === "code" && code};
     ${({ variant }) => variant === "displayChar" && displayChar};
     ${({ variant }) => variant === "displayKey" && displayKey};
+    ${({ variant }) => variant === "tableCell" && tableCell};
 `;
 
 export default Container;

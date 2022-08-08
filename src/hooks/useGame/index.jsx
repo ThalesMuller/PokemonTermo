@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useContext, createRef } from "react";
+import React, { useCallback, useEffect, useContext, useState } from "react";
 import AttemptsContext from "../../contexts/attemptsContext";
 import { usePokemon } from "../usePokemon";
 
@@ -7,11 +7,23 @@ export const MAX_ATTEMPTS = 6;
 export const useGame = () => {
     const { attempts, setAttempts } = useContext(AttemptsContext);
     const { pokemons, todayPokemon } = usePokemon();
-    const wordSize = 6;
+    const [win, setWin] = useState(undefined);
 
     useEffect(() => {
+        if (!todayPokemon) return;
         startGame();
-    }, []);
+    }, [todayPokemon]);
+
+    useEffect(() => {
+        if (shouldUnlockNextAttempt()) {
+            unlockNextAttempt();
+        }
+    }, [attempts]);
+
+    useEffect(() => {
+        if (win === undefined) return;
+        endGame(win);
+    }, [win]);
 
     const isAttemptCompleted = (attempt, checkCurrent) => {
         if ((checkCurrent && attempt.state === "current") || attempt.state === "empty" || !attempt.values.length)
@@ -20,30 +32,24 @@ export const useGame = () => {
         return true;
     };
 
-    const isGameOver = useCallback(() => {
-        if (!attempts.length) return false;
-
-        return attempts.every((attempt) => isAttemptCompleted(attempt));
-    }, [attempts]);
-
     const initAttempts = () => {
         const newAttempts = Array(MAX_ATTEMPTS).fill({});
         setAttempts(
             newAttempts.map((c, index) => {
                 return {
                     id: index,
-                    values: Array(wordSize)
+                    values: Array(todayPokemon.length)
                         .fill("")
                         .map((value, i) => {
                             return {
                                 id: i,
-                                ref: createRef(null),
                                 state: index === 0 ? "current" : "standby",
                                 value: "",
                             };
                         }),
                     state: index === 0 ? "current" : "standby",
                     selectedIndex: -1,
+                    error: false,
                 };
             }),
         );
@@ -56,13 +62,23 @@ export const useGame = () => {
         verifyAttempt();
     };
 
+    const getCurrentAttempt = useCallback(() => {
+        return attempts.find((attempt) => attempt.state === "current");
+    }, [attempts]);
+
+    const setAttempt = (attempt, params) => {
+        const newAttempts = [...attempts];
+        newAttempts[attempt.id] = { ...attempt, ...params };
+        setAttempts(newAttempts);
+    };
+
     const eraseLastCharacter = () => {
-        const currentAttempt = attempts.find((attempt) => attempt.state === "current");
+        const currentAttempt = getCurrentAttempt();
         if (!currentAttempt) return;
 
         if (currentAttempt.values.every((value) => !value.value)) return;
 
-        let lastChar = currentAttempt.selectedIndex - 1;
+        let lastChar = currentAttempt.selectedIndex;
 
         if (lastChar < 0 || currentAttempt.values[lastChar].value === "") {
             const filledChars = currentAttempt.values.filter((char) => char.value !== "");
@@ -70,21 +86,19 @@ export const useGame = () => {
         }
         if (lastChar === undefined) return;
         if (currentAttempt.values[lastChar].state === "empty") return;
-        if (currentAttempt.values[lastChar].state === "completed") return;
         if (!currentAttempt.values[lastChar].value) return;
 
         const newValues = [...currentAttempt.values];
         newValues[lastChar].value = "";
 
-        const newAttempt = { ...currentAttempt, selectedIndex: -1, values: newValues };
-        const newAttempts = [...attempts];
-        newAttempts[currentAttempt.id] = newAttempt;
-
-        setAttempts(newAttempts);
+        setAttempt(currentAttempt, {
+            values: newValues,
+            selectedIndex: lastChar,
+        });
     };
 
     const setKey = (key) => {
-        const currentAttempt = attempts.find((attempt) => attempt.state === "current");
+        const currentAttempt = getCurrentAttempt();
         if (!currentAttempt || currentAttempt.selectedIndex === -2) return;
 
         const currentValueIndex = currentAttempt.selectedIndex === -1 ? 0 : currentAttempt.selectedIndex;
@@ -93,58 +107,51 @@ export const useGame = () => {
         newValues[currentValueIndex] = {
             ...newValues[currentValueIndex],
             value: key,
-            state: "current",
         };
 
-        let newAttempts = [...attempts];
-        newAttempts[currentAttempt.id] = {
-            ...currentAttempt,
+        const nextValueIndex = currentValueIndex + 1;
+
+        setAttempt(currentAttempt, {
+            selectedIndex: nextValueIndex < todayPokemon.length ? nextValueIndex : -2,
             values: newValues,
-            selectedIndex: currentValueIndex + 1 <= wordSize - 1 ? currentValueIndex + 1 : -2,
-        };
-
-        setAttempts(newAttempts);
+        });
     };
 
-    const setCurrentAttempt = (index) => {
-        const newAttempts = [...attempts];
-        newAttempts[index].state = "current";
-        newAttempts[index].selectedIndex = 0;
-        newAttempts[index].values = newAttempts[index].values.map((value) => {
-            return {
-                ...value,
-                state: "current",
-            };
-        });
+    const validadeValueState = (value, index) => {
+        if (todayPokemon.includes(value)) {
+            if (value === todayPokemon[index]) return "success";
 
-        setAttempts(newAttempts);
+            return "warn";
+        }
+
+        return "error";
+    };
+
+    const setAttemptError = (currentAttempt) => {
+        setAttempt(currentAttempt, { error: true });
+
+        setTimeout(() => {
+            setAttempt(currentAttempt, { error: false });
+        }, 1000);
     };
 
     const verifyAttempt = () => {
-        const currentAttempt = attempts.find((attempt) => attempt.state === "current");
+        const currentAttempt = getCurrentAttempt();
         const currentWord = currentAttempt.values
             .map((value) => value.value)
             .join("")
             .toLowerCase();
 
-        if (!pokemons.includes(currentWord)) return;
-
-        let win;
-        if (currentWord === todayPokemon) {
-            win = true;
-        } else if (currentAttempt.id === MAX_ATTEMPTS - 1) {
-            win = false;
+        if (!pokemons.includes(currentWord)) {
+            setAttemptError(currentAttempt);
+            return;
         }
 
-        const validadeValueState = (value, index) => {
-            if (todayPokemon.includes(value)) {
-                if (value === todayPokemon[index]) return "success";
-
-                return "warn";
-            }
-
-            return "error";
-        };
+        if (currentWord === todayPokemon) {
+            setWin(true);
+        } else if (currentAttempt.id === MAX_ATTEMPTS - 1) {
+            setWin(false);
+        }
 
         let newValues = [...currentAttempt.values];
         newValues = newValues.map((value, index) => {
@@ -154,27 +161,31 @@ export const useGame = () => {
             };
         });
 
-        let newAttempts = [...attempts];
-        newAttempts[currentAttempt.id] = {
-            ...currentAttempt,
-            values: newValues,
+        setAttempt(currentAttempt, {
             state: "completed",
+            values: newValues,
+        });
+    };
+
+    const shouldUnlockNextAttempt = useCallback(() => {
+        const lastAttemptIsCompleted = attempts.find((attempt) => attempt.state === "completed");
+        const noCurrentAttempt = !attempts.find((attempt) => attempt.state === "current");
+
+        return lastAttemptIsCompleted && noCurrentAttempt && win === undefined;
+    }, [attempts, win]);
+
+    const unlockNextAttempt = () => {
+        const nextAttempt = attempts.find((attempt) => attempt.state === "standby");
+        if (!nextAttempt) return;
+
+        const nextAtemptObj = {
+            state: "current",
+            values: nextAttempt.values.map((value) => {
+                return { ...value, value: "", state: "current" };
+            }),
+            selectedIndex: -1,
         };
-
-        if (win === undefined) {
-            newAttempts[currentAttempt.id + 1] = {
-                ...newAttempts[currentAttempt.id + 1],
-                state: "current",
-                values: newAttempts[currentAttempt.id + 1].values.map((value) => {
-                    return {
-                        ...value,
-                        state: "current",
-                    };
-                }),
-            };
-        } else endGame(win);
-
-        setAttempts(newAttempts);
+        setAttempt(nextAttempt, nextAtemptObj);
     };
 
     const startGame = () => {
@@ -185,14 +196,28 @@ export const useGame = () => {
     };
 
     const handleCharClick = (index) => {
-        const currentAttempt = attempts.find((attempt) => attempt.state === "current");
+        const currentAttempt = getCurrentAttempt();
         if (!currentAttempt) return;
 
-        const newAttempts = [...attempts];
-        newAttempts[currentAttempt.id].selectedIndex = index;
+        console.log("handleCharClick", index, currentAttempt.selectedIndex);
 
-        setAttempts(newAttempts);
+        setAttempt(currentAttempt, { selectedIndex: currentAttempt.selectedIndex === index ? -2 : index });
     };
 
-    return { confirmAttempt, setKey, eraseLastCharacter, handleCharClick };
+    const getKeyState = (key) => {
+        const passedAttempts = attempts.filter((attempt) => attempt.state === "completed");
+
+        if (passedAttempts.length === MAX_ATTEMPTS) return "disabled";
+        if (passedAttempts.length === 0) return "default";
+        if (
+            passedAttempts.find((attempt) =>
+                attempt.values.find((value) => value.value === key && value.state === "error"),
+            )
+        )
+            return "disabled";
+
+        return "default";
+    };
+
+    return { confirmAttempt, setKey, eraseLastCharacter, handleCharClick, getKeyState, todayPokemon };
 };

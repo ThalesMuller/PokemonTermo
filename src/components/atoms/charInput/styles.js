@@ -9,6 +9,20 @@ const Blink = keyframes`
     }
 `;
 
+const shaking = keyframes`
+  0% { transform: translate(1px, 1px) rotate(0deg); }
+  10% { transform: translate(-1px, -2px) rotate(-1deg); }
+  20% { transform: translate(-3px, 0px) rotate(1deg); }
+  30% { transform: translate(3px, 2px) rotate(0deg); }
+  40% { transform: translate(1px, -1px) rotate(1deg); }
+  50% { transform: translate(-1px, 2px) rotate(-1deg); }
+  60% { transform: translate(-3px, 1px) rotate(0deg); }
+  70% { transform: translate(3px, 1px) rotate(-1deg); }
+  80% { transform: translate(-1px, -1px) rotate(1deg); }
+  90% { transform: translate(1px, 2px) rotate(0deg); }
+  100% { transform: translate(1px, -2px) rotate(-1deg); }
+`;
+
 const CurrentInput = css`
     position: relative;
 
@@ -32,13 +46,12 @@ const CurrentInput = css`
         transform-origin: bottom center;
     }
 
-    &:hover:not(:active, :focus) {
+    &:hover:not([data-active="true"]) {
         transform: scale(1.05);
         background-color: ${({ theme }) => theme.colors.brand.primary.light};
     }
 
     &[data-active="true"] {
-        cursor: unset;
         background-color: ${({ theme }) => theme.colors.brand.primary.light};
     }
 
@@ -48,6 +61,25 @@ const CurrentInput = css`
             transform: scaleX(1);
             animation: ${Blink} 1250ms ease-in-out 190ms infinite;
         }
+    }
+
+    &[data-error="true"] {
+        animation: ${shaking} 300ms ease-in-out;
+
+        &::before {
+            opacity: ${({ theme }) => theme.opacities.semiOpaque};
+            animation: ${shaking} 300ms ease-in-out;
+        }
+    }
+
+    &::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        z-index: -1;
+        background-color: ${({ theme }) => theme.colors.feedback.error.darkest};
+        opacity: ${({ theme }) => theme.opacities.transparent};
+        transition: opacity 200ms ease;
     }
 `;
 
@@ -72,7 +104,7 @@ const SuccessInput = css`
 `;
 
 const Container = styled.div`
-    padding: ${({ theme }) => theme.spacing._3XS} ${({ theme }) => theme.spacing._2XS};
+    padding: ${({ theme }) => theme.spacing._4XS} ${({ theme }) => theme.spacing._2XS};
     border-radius: ${({ theme }) => theme.borderRadius.SM};
     background-color: ${({ theme }) => theme.colors.brand.secondary.medium};
 

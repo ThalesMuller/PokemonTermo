@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from "react";
+import React, { useEffect } from "react";
 import { KeyboardKey } from "../../atoms/keyboardKey";
 import { Typography } from "../../atoms/typography";
 import { MdBackspace } from "react-icons/md";
@@ -10,8 +10,15 @@ const SECOND_ROW = "A S D F G H J K L backspace";
 const THIRD_ROW = "Z X C V B N M enter";
 
 export const VirtualKeyboard = () => {
-    const keyBoardRef = useRef();
-    const { confirmAttempt, setKey, eraseLastCharacter } = useGame();
+    const { confirmAttempt, setKey, eraseLastCharacter, getKeyState } = useGame();
+
+    useEffect(() => {
+        window.addEventListener("keydown", onKeyPress);
+
+        return () => {
+            window.removeEventListener("keydown", onKeyPress);
+        };
+    }, []);
 
     const onKeyClick = (key) => {
         setKey(key);
@@ -24,56 +31,26 @@ export const VirtualKeyboard = () => {
         confirmAttempt();
     };
 
-    const isDisabled = (key) => {
-        return false;
-    };
-
-    const addEventListener = (key) => {
-        // console.log("add", key);
-        if (key === "backspace") {
-            window.addEventListener("backspace", onBackspaceClick);
-        } else if (key === "enter") {
-            window.addEventListener("enter", onEnterClick);
-        } else {
-            window.addEventListener(key, () => onKeyClick(key));
+    const onKeyPress = (key) => {
+        const sanitizedKey = key.key.toUpperCase();
+        if (sanitizedKey === "BACKSPACE") {
+            onBackspaceClick();
+        } else if (sanitizedKey === "ENTER") {
+            onEnterClick();
+        } else if (
+            (FIRST_ROW.includes(sanitizedKey) ||
+                SECOND_ROW.includes(sanitizedKey) ||
+                THIRD_ROW.includes(sanitizedKey)) &&
+            getKeyState(key) !== "disabled"
+        ) {
+            onKeyClick(key.key.toUpperCase());
         }
     };
-
-    const removeEventListener = (key) => {
-        // console.log("remove", key);
-        if (key === "backspace") {
-            window.removeEventListener("backspace", onBackspaceClick);
-        } else if (key === "enter") {
-            window.removeEventListener("enter", onEnterClick);
-        } else {
-            window.removeEventListener(key, () => onKeyClick(key));
-        }
-    };
-
-    const addListeners = () => {
-        FIRST_ROW.split(" ").forEach((key) => addEventListener(key));
-        SECOND_ROW.split(" ").forEach((key) => addEventListener(key));
-        THIRD_ROW.split(" ").forEach((key) => addEventListener(key));
-    };
-
-    const removeListeners = () => {
-        FIRST_ROW.split(" ").forEach((key) => removeEventListener(key));
-        SECOND_ROW.split(" ").forEach((key) => removeEventListener(key));
-        THIRD_ROW.split(" ").forEach((key) => removeEventListener(key));
-    };
-
-    useEffect(() => {
-        addListeners();
-
-        return () => {
-            removeListeners();
-        };
-    });
 
     const renderKey = (key) => {
         if (key === "backspace") {
             return (
-                <KeyboardKey key={key} keyName={key} onClick={onBackspaceClick} disabled={isDisabled(key)}>
+                <KeyboardKey key={key} keyName={key} onClick={onBackspaceClick} state={getKeyState(key)}>
                     {<MdBackspace size='0.7em' />}
                 </KeyboardKey>
             );
@@ -84,7 +61,7 @@ export const VirtualKeyboard = () => {
                 key={key}
                 keyName={key}
                 onClick={key === "enter" ? onEnterClick : onKeyClick}
-                disabled={isDisabled(key)}
+                state={getKeyState(key)}
             >
                 <Typography variant='displayKey'>{key}</Typography>
             </KeyboardKey>
@@ -104,7 +81,7 @@ export const VirtualKeyboard = () => {
     };
 
     return (
-        <Container ref={keyBoardRef}>
+        <Container>
             <KeyRow>{renderFirstRow()}</KeyRow>
             <KeyRow>{renderSecondRow()}</KeyRow>
             <KeyRow>{renderThirdRow()}</KeyRow>

@@ -19,6 +19,7 @@ const MAPPED_VARIANTS = {
     code: "code",
     displayChar: "span",
     displayKey: "span",
+    tableCell: "span",
 };
 
 export const Typography = (props) => {

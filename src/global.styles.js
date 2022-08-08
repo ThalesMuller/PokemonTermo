@@ -76,8 +76,8 @@ select {
 }
 
 html {
-    --min-font-size: ${({ theme }) => theme.fonts.size.XS};
-    --ideal-font-size: calc(3vmin + ${({ theme }) => theme.fonts.size.XS});
+    --min-font-size: ${({ theme }) => theme.fonts.size._2XS};
+    --ideal-font-size: calc(3vmin + ${({ theme }) => theme.fonts.size._3XS});
     --max-font-size: ${({ theme }) => theme.fonts.size._3XL};
     font-size: clamp(var(--min-font-size), var(--ideal-font-size), var(--max-font-size));
 
