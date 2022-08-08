@@ -37,7 +37,7 @@ const Container = styled.div`
 
     box-shadow: ${({ theme }) => theme.shadows.level1};
 
-    &:hover {
+    &:hover:not([data-state="disabled"]) {
         transform: scale(1.05);
         &::after {
             animation: ${Waving} 2000ms ease-in-out infinite;
@@ -66,6 +66,11 @@ const Container = styled.div`
         border: ${({ theme }) => `${theme.borderWidth.SM} solid ${theme.colors.grayscale.white}`};
 
         background-color: ${({ theme }) => theme.colors.grayscale.dark};
+    }
+
+    &[data-state="disabled"] {
+        cursor: not-allowed;
+        background-color: ${({ theme }) => theme.colors.grayscale.medium};
     }
 `;
 
