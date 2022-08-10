@@ -1,9 +1,12 @@
 import React, { useCallback } from "react";
 import { CharInput } from "../../atoms/charInput";
+import { useGame } from "../../../hooks/useGame";
 import Container from "./styles";
 
 export const WordInput = (props) => {
     const { state, values, selectedIndex, error } = props;
+
+    const { handleCharClick } = useGame();
 
     const isActive = useCallback(
         (index) => {
@@ -22,6 +25,7 @@ export const WordInput = (props) => {
                     value={char.value}
                     active={isActive(char.id)}
                     errorState={error}
+                    onClick={handleCharClick}
                 />
             );
         });

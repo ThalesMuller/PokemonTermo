@@ -70,7 +70,7 @@ export const getAllPokemons = async (limit, offset) => {
         const response = await api.get(`/pokemon?limit=${limit || 100000}&offset=${offset || 0}`);
         return response.data;
     } catch (error) {
-        console.log(error);
+        console.error(error);
     }
 };
 export const getAllPokemonsUntilSunAndMoon = async () => {
@@ -78,7 +78,7 @@ export const getAllPokemonsUntilSunAndMoon = async () => {
         const response = await api.get("/pokemon?limit=649&offset=0");
         return response.data;
     } catch (error) {
-        console.log(error);
+        console.error(error);
     }
 };
 

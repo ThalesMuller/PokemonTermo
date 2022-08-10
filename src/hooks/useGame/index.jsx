@@ -67,7 +67,7 @@ export const useGame = () => {
     }, [attempts]);
 
     const setAttempt = (attempt, params) => {
-        const newAttempts = [...attempts];
+        let newAttempts = [...attempts];
         newAttempts[attempt.id] = { ...attempt, ...params };
         setAttempts(newAttempts);
     };
@@ -199,9 +199,9 @@ export const useGame = () => {
         const currentAttempt = getCurrentAttempt();
         if (!currentAttempt) return;
 
-        console.log("handleCharClick", index, currentAttempt.selectedIndex);
-
+        console.log("handleCharClick", index, currentAttempt);
         setAttempt(currentAttempt, { selectedIndex: currentAttempt.selectedIndex === index ? -2 : index });
+        console.log(attempts);
     };
 
     const getKeyState = (key) => {

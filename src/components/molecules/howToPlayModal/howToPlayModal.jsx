@@ -1,6 +1,6 @@
 import React from "react";
-import { CharInput } from "../charInput";
-import { Typography } from "../typography";
+import { CharInput } from "../../atoms/charInput";
+import { Typography } from "../../atoms/typography";
 import { useTheme } from "styled-components";
 import Container, { WordWrapper, CharWrapper } from "./styles";
 

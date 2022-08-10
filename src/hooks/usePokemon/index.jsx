@@ -1,9 +1,11 @@
 import React, { useCallback, useEffect, useState } from "react";
 import { getAllPokemons, GENERATIONS } from "../../services/api";
 
+const resetSyncDate = new Date("2022-08-09T00:00:00.000Z");
+
 export const usePokemon = () => {
-    const [pokemons, setPokemons] = useState(null);
-    const [todayPokemon, setTodayPokemon] = useState(null);
+    const [pokemons, setPokemons] = useState(undefined);
+    const [todayPokemon, setTodayPokemon] = useState(undefined);
 
     const isOnLocalStorage = () => {
         return localStorage.getItem("pokemon") !== null;
@@ -16,39 +18,59 @@ export const usePokemon = () => {
         localStorage.setItem("pokemon", JSON.stringify(pokemon));
         localStorage.setItem("pokemon_sync_date", new Date().toISOString());
     };
+    const getLastSyncDate = () => {
+        return new Date(localStorage.getItem("pokemon_sync_date"));
+    };
+
+    const sanitazePokemonList = (pokemonList) => {
+        return pokemonList
+            .map((pokemon) => {
+                if (pokemon.name === "nidoran-f") return "nidoran";
+
+                return pokemon.name.toLowerCase();
+            })
+            .filter(
+                (pokemon) =>
+                    pokemon.length > 4 && pokemon.length < 10 && !pokemon.includes("-") && !/\d/.test("pokemon"),
+            );
+    };
+
+    const getPokemonFromApi = async () => {
+        let result = await getAllPokemons(GENERATIONS[6].until);
+        result = await sanitazePokemonList(result.results);
+
+        return result;
+    };
+
+    const getPokemons = async () => {
+        if (isOnLocalStorage() && getLastSyncDate() > resetSyncDate) {
+            return getPokemonFromLocalStorage();
+        }
+        const result = await getPokemonFromApi();
+
+        setPokemonToLocalStorage(result);
+        return result;
+    };
 
     const loadPokemons = async () => {
-        if (isOnLocalStorage()) {
-            setPokemons(getPokemonFromLocalStorage());
-            return;
-        }
-
-        let result = await getAllPokemons(GENERATIONS[6].until);
-        result = await result.results
-            .map((pokemon) => {
-                if (pokemon.name.includes("nidoran")) return "nidoran";
-
-                return pokemon.name;
-            })
-            .filter((pokemon) => pokemon.length > 4 && pokemon.length < 10 && !pokemon.includes("-"));
-
+        console.log(pokemons);
+        const result = await getPokemons();
         setPokemons(result);
-        setPokemonToLocalStorage(result);
     };
 
     const getTodayPokemon = useCallback(() => {
         const timestamp = Date.now();
-        const index = Math.floor(timestamp / 86400000) % pokemons.length;
+        const index = Math.floor(timestamp / process.env.REACT_APP_GAME_START_DAY_TIMESTAMP) % pokemons.length;
 
         return pokemons[index];
     }, [pokemons]);
 
     useEffect(() => {
-        loadPokemons();
+        if (!pokemons && !todayPokemon) loadPokemons();
     }, []);
 
     useEffect(() => {
-        if (pokemons) setTodayPokemon(getTodayPokemon());
+        if (pokemons && !todayPokemon) setTodayPokemon(getTodayPokemon());
     }, [pokemons]);
 
     return { todayPokemon, pokemons };
